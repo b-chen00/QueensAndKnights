@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 /**
-* Represents a chess board with functions.
+* Represents a chess board with Knight's Tour related functions.
 * @author Brandon Chen
 */
 public class KnightBoard{
