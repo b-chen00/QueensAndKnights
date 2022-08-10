@@ -35,37 +35,7 @@ public class Driver{
     runTest(2);
     runTest(3);
     runTest(4);
-/**
-		KnightBoard board1 = new KnightBoard(1,1);
-		KnightBoard board2 = new KnightBoard(2,2);
-		KnightBoard board3 = new KnightBoard(3,3);
-		KnightBoard board4 = new KnightBoard(4,4);
-		KnightBoard board5 = new KnightBoard(5,5);
-		KnightBoard board6 = new KnightBoard(6,6);
-		KnightBoard board7 = new KnightBoard(7,7);
-		KnightBoard board8 = new KnightBoard(8,8);
-		KnightBoard board9 = new KnightBoard(37,37);
-		//System.out.println(board4.toString());
 
-	//	System.out.println(board1.solve(0,0));
-		//System.out.println
-
-		System.out.println(board2.solve(0,0));
-	  System.out.println(board3.solve(0,0));
-		System.out.println(board4.solve(0,0));
-		System.out.println(board5.solve(0,0));
-		System.out.println(board6.solve(0,0));
-		System.out.println(board7.solve(0,0));
-		System.out.println(board8.solve(0,0));
-		System.out.println(board9.solve(0,0));
-
-//	System.out.println(board5.countSolutions(2,2));
-		//runTest(4);
-		//System.out.println(board4.toString());
-		//System.out.println(board5.countSolutions(0,0));
-		//System.out.println(board5.toString());
-		//System.out.println(board1.toStringOutGoingMoves());
-		**/
 		String time;
 		System.out.println("SOLVE: (from (0, 0))\n");
 		for (int r = 1; r < 100; r++) {
@@ -99,6 +69,6 @@ public class Driver{
 				}
 			}
 		}
-		
+
 	}
 }
