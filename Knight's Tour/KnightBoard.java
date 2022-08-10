@@ -49,17 +49,18 @@ public class KnightBoard{
 	* Solves the knight's tour starting at position startRow and startCol.
 	* @param startRow the row from which the knight will start the tour.
 	* @param startCol the column from which the knight will start the tour.
+	* @exception IllegalArgumentException if starting row and column are not within the board.
+	* @exception IllegalStateException if the board is not empty.
 	* @return a boolean indicating whether it is solvable or not.
 	*/
 	public boolean solve(int startRow, int startCol) {
 		//starting row and col should be a valid index.
-		if(startRow < 0 || startCol < 0) {
+		if(startRow < 0 || startCol < 0 || startRow >= board.length || startCol >= board[0].length) {
 			throw new IllegalArgumentException();
 		}
 		for(int r = 0; r < board2.length; r++) {
 			for(int c = 0; c < board2[r].length; c++) {
 				if(board[r][c] != 0) {
-					//the board should be completely empty.
 					throw new IllegalStateException();
 				}
 			}
@@ -116,17 +117,17 @@ public class KnightBoard{
 	* Counts how many different tours can be made by the knight starting at a specific row and column.
 	* @param startRow the row that the knight will start the tour on.
 	* @param startCol the column that the knight will start the tour on.
+	* @exception IllegalArgumentException if starting row and column are not within the board.
+	* @exception IllegalStateException if the board is not empty.
 	* @return the number of solutions or unique tours found as an integer.
 	*/
 	public int countSolutions(int startRow, int startCol) {
-		if(startRow < 0 || startCol < 0) {
-			//starting row and col should be a valid index.
+		if(startRow < 0 || startCol < 0 || startRow >= board.length || startCol >= board[0].length) {
 			throw new IllegalArgumentException();
 		}
 		for(int r = 0; r < board2.length; r++) {
 			for(int c = 0; c < board2[r].length; c++) {
 				if(board[r][c] != 0) {
-					//the board should be completely empty.
 					throw new IllegalStateException();
 				}
 			}
