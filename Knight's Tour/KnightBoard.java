@@ -1,7 +1,8 @@
 import java.util.Arrays;
 
-/** Represents a chess board with functions.
- * @author Brandon Chen
+/**
+* Represents a chess board with functions.
+* @author Brandon Chen
 */
 public class KnightBoard{
 	//the board that the knight will tranverse to see if a solution is valid
@@ -14,10 +15,10 @@ public class KnightBoard{
 	private int count;
 
 	/**
-	 * initalizes knightboard and fills in initial state of board2
-	 * @param rows how many rows the board has
-	 * @param cols how many columns the board has
-	 */
+	* initalizes knightboard and fills in initial state of board2
+	* @param rows how many rows the board has
+	* @param cols how many columns the board has
+	*/
 	public KnightBoard(int rows,int cols) {
 		count = 0;
 		board = new int[rows][cols];
@@ -26,8 +27,8 @@ public class KnightBoard{
 	}
 
 	/**
-	 * Fills the board2 moves which indicates the the number of valid moves that can be made by a knight at a location.
-	 */
+	* Fills the board2 moves which indicates the the number of valid moves that can be made by a knight at a location.
+	*/
 	private void fills() {
 		if(board.length > 0) {
 			board2 = new int[board.length][board[0].length];
@@ -45,11 +46,11 @@ public class KnightBoard{
 	}
 
 	/**
-	 * Solves the knight's tour starting at position startRow and startCol.
-	 * @param startRow the row from which the knight will start the tour.
-	 * @param startCol the column from which the knight will start the tour.
-	 * @return a boolean indicating whether it is solvable or not.
-	 */
+	* Solves the knight's tour starting at position startRow and startCol.
+	* @param startRow the row from which the knight will start the tour.
+	* @param startCol the column from which the knight will start the tour.
+	* @return a boolean indicating whether it is solvable or not.
+	*/
 	public boolean solve(int startRow, int startCol) {
 		//starting row and col should be a valid index.
 		if(startRow < 0 || startCol < 0) {
@@ -71,12 +72,12 @@ public class KnightBoard{
 	}
 
 	/**
-	 * A helper function for solve to compute a solution.
-	 * @param r the row that the next knight will be placed on.
-	 * @param c the column that the next knight will be placed on.
-	 * @param pos the number of the knight that is being place.
-	 * @return a boolean on whether a solution is found or not.
-	 */
+	* A helper function for solve to compute a solution.
+	* @param r the row that the next knight will be placed on.
+	* @param c the column that the next knight will be placed on.
+	* @param pos the number of the knight that is being place.
+	* @return a boolean on whether a solution is found or not.
+	*/
 	private boolean solveHelper(int r, int c, int pos) {
 		if(pos == board.length * board[0].length) {
 			//a solution is found as the number of knights equal the total numbers of spots on the board.
@@ -112,11 +113,11 @@ public class KnightBoard{
 	}
 
 	/**
-	 * Counts how many different tours can be made by the knight starting at a specific row and column.
-	 * @param startRow the row that the knight will start the tour on.
-	 * @param startCol the column that the knight will start the tour on.
-	 * @return the number of solutions or unique tours found as an integer.
-	 */
+	* Counts how many different tours can be made by the knight starting at a specific row and column.
+	* @param startRow the row that the knight will start the tour on.
+	* @param startCol the column that the knight will start the tour on.
+	* @return the number of solutions or unique tours found as an integer.
+	*/
 	public int countSolutions(int startRow, int startCol) {
 		if(startRow < 0 || startCol < 0) {
 			//starting row and col should be a valid index.
@@ -140,11 +141,11 @@ public class KnightBoard{
 	}
 
 	/**
-	 * A helper function for countSolution that attempts a tour and increases count if it is a solution.
-	 * @param r the row that the next knight will be placed on.
-	 * @param c the column that the next knight will be placed on.
-	 * @param pos the number of the knight that is being place.
-	 */
+	* A helper function for countSolution that attempts a tour and increases count if it is a solution.
+	* @param r the row that the next knight will be placed on.
+	* @param c the column that the next knight will be placed on.
+	* @param pos the number of the knight that is being place.
+	*/
 	private void countSolutionHelper(int r, int c, int pos) {
 		if(pos == board.length * board[0].length) {
 			//a solution is found as the number of knights equal the total numbers of spots on the board.
@@ -161,12 +162,12 @@ public class KnightBoard{
 	}
 
 	/**
-	 * Determines all the possible legal moves that can be made by the knight at (r,c).
-	 * @param r the row from which we are trying to determine whether a legal move can be made from.
-	 * @param c the column from which we are trying to determine whether a legal move can be made from.
-	 * @return an 2D array where the first column is the number of legal moves that can be made at a position that (r,c) can legally move to.
-	 * The second column contains the row number of that position while the third column contains its column number.
-	 */
+	* Determines all the possible legal moves that can be made by the knight at (r,c).
+	* @param r the row from which we are trying to determine whether a legal move can be made from.
+	* @param c the column from which we are trying to determine whether a legal move can be made from.
+	* @return an 2D array where the first column is the number of legal moves that can be made at a position that (r,c) can legally move to.
+	* The second column contains the row number of that position while the third column contains its column number.
+	*/
 	private int[][] getMoves(int r, int c) {
 		fills();
 		int[][] moves = new int[board2[r][c]][3];
@@ -188,10 +189,10 @@ public class KnightBoard{
 	}
 
 	/**
-	 * A merge sort implementation to sort the 2D array of moves and their row/col number.
-	 * @param ary the 2D array of moves that is being sorted.
-	 * @return a new sorted array.
-	 */
+	* A merge sort implementation to sort the 2D array of moves and their row/col number.
+	* @param ary the 2D array of moves that is being sorted.
+	* @return a new sorted array.
+	*/
 	private int[][] sort(int[][] ary) {
 		if(ary.length == 1) {
 			return ary;
@@ -216,11 +217,11 @@ public class KnightBoard{
 	}
 
 	/**
-	 * Merges two 2D arrays of moves such that they are sorted.
-	 * @param ary1 the first sorted array that is being sorted with the second.
-	 * @param ary2 the second sorted array that is being sorted with the first.
-	 * @return a new sorted array containing all elements of both ary1 and ary2.
-	 */
+	* Merges two 2D arrays of moves such that they are sorted.
+	* @param ary1 the first sorted array that is being sorted with the second.
+	* @param ary2 the second sorted array that is being sorted with the first.
+	* @return a new sorted array containing all elements of both ary1 and ary2.
+	*/
 	private int[][] merge(int[][] ary1,int[][] ary2) {
 		int[][] out = new int[ary1.length+ary2.length][3];
 		int o = 0;
@@ -261,8 +262,9 @@ public class KnightBoard{
 	}
 
 	/**
-	 * Prints the current state of the board as a String.
-	 */
+	* Returns the current state of the board as a String.
+	* @return a string representation of the baord.
+	*/
 	public String toString() {
 		String out = "";
 		for(int r = 0; r < board.length; r++) {
