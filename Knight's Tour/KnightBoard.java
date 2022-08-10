@@ -83,9 +83,11 @@ public class KnightBoard{
 			board[r][c] = pos;
 			return true;
 		}
+		// gets all legal moves that can be made by the knight at position (r,c).
 		int[][] moves = getMoves(r,c);
+		// place the knight at (r,c)
 		board[r][c] = pos;
-		board[r][c] = 0;
+		// update board2 because, by placing a knight, there should be at most 8 places with 1 less legal move that can be made by a knight at that location.
 		for (int i = 0; i < move.length; i++) {
 			if (move[i][0] + r < board.length && move[i][0] >= 0 && move[i][1] + c < board[0].length && move[i][1] + c >= 0 && board2[move[i][0] + r][move[i][1] + c] > 0){
 				board2[move[i][0] + r][move[i][1] + c]--;
@@ -97,7 +99,7 @@ public class KnightBoard{
 				return true;
 			}
 		}
-		//backtracks if a solution isn't found.
+		//backtracks if a solution isn't found by unplacing the knight and updating board2 since a spot has been freed and another legal move could be made from surrounding positions.
 		board[r][c] = 0;
 		for (int i = 0; i < move.length; i++) {
 			if (move[i][0] + r < board.length && move[i][0] >= 0 && move[i][1] + c < board[0].length && move[i][1] + c >= 0){
@@ -148,20 +150,30 @@ public class KnightBoard{
 			//a solution is found as the number of knights equal the total numbers of spots on the board.
 			count++;
 		}
-		int[][] moves = getMoves(r,c);
+		int[][] moves = getMoves(r,c); //getMoves sort the 2D array but there isn't a need here as all indices will be parsed through regardless.
 		board[r][c] = pos;
+		//board2 could be updated here but that isn't necessary as getMoves contains a check for legal moves so knights will never move to an illegal/tranversed spot.
+		//This function counts solution so it doesn't matter how many legal moves can be moved from a specific location but rather if it is a possible solution.
 		for(int i = 0; i < moves.length; i++) {
 			countSolutionHelper(moves[i][1],moves[i][2],pos+1);
 		}
 		board[r][c] = 0;
 	}
 
-	public int[][] getMoves(int r, int c) {
+	/**
+	 * Determines all the possible legal moves that can be made by the knight at (r,c).
+	 * @param r the row from which we are trying to determine whether a legal move can be made from.
+	 * @param c the column from which we are trying to determine whether a legal move can be made from.
+	 * @return an 2D array where the first column is the number of legal moves that can be made at a position that (r,c) can legally move to.
+	 * The second column contains the row number of that position while the third column contains its column number.
+	 */
+	private int[][] getMoves(int r, int c) {
 		fills();
 		int[][] moves = new int[board2[r][c]][3];
 		int i = 0;
 		if(board2[r][c] > 0) {
 			for(int n = 0; n < move.length; n++) {
+				//checks if a possible move from (r,c) is legal in the respect that it is within the boundaries of the board and doesn't hold a knight already (ie. previously past by the knight in its tour).
 				if(r+move[n][0] >= 0 && r+move[n][0] < board2.length && c+move[n][1] >= 0 && c+move[n][1] < board2[0].length && board[r+move[n][0]][c+move[n][1]] == 0) {
 					moves[i][0] = board2[r+move[n][0]][c+move[n][1]];
 					moves[i][1] = r+move[n][0];
@@ -169,11 +181,17 @@ public class KnightBoard{
 					i++;
 				}
 			}
+			//sorts all legal moves so that moves to positions with the lowest accessibility at placed at the front.
 			return sort(moves);
 		}
 		return moves;
 	}
 
+	/**
+	 * A merge sort implementation to sort the 2D array of moves and their row/col number.
+	 * @param ary the 2D array of moves that is being sorted.
+	 * @return a new sorted array.
+	 */
 	private int[][] sort(int[][] ary) {
 		if(ary.length == 1) {
 			return ary;
@@ -181,6 +199,8 @@ public class KnightBoard{
 		else {
 			int n = 0;
 			int m = ary.length/2;
+			//recursively splits the array in half until all that is left are a bunch of length 1 arrays.
+			//these length 1 arrays are sorted and progressively merged together to created a sorted array.
 			int[][] temp1 = new int[m][3];
 			int[][] temp2 = new int[ary.length-m][3];
 			for(int i = 0; i < temp1.length; i++) {
@@ -195,26 +215,37 @@ public class KnightBoard{
 		}
 	}
 
+	/**
+	 * Merges two 2D arrays of moves such that they are sorted.
+	 * @param ary1 the first sorted array that is being sorted with the second.
+	 * @param ary2 the second sorted array that is being sorted with the first.
+	 * @return a new sorted array containing all elements of both ary1 and ary2.
+	 */
 	private int[][] merge(int[][] ary1,int[][] ary2) {
 		int[][] out = new int[ary1.length+ary2.length][3];
 		int o = 0;
 		int t = 0;
 		int n = 0;
 		for(;n < out.length; n++) {
+			//checks if all elements are ary1 are sort
 			if(o == ary1.length) {
+				//ary1 are all in the output so all that is left are elements of ary2.
 				for(int i = n; i < out.length; i++) {
 					out[i] = ary2[t];
 					t++;
 				}
 				return out;
 			}
+			//checks if all elements are ary2 are sort
 			if(t == ary2.length) {
+				//ary2 are all in the output so all that is left are elements of ary1.
 				for(int i = n; i < out.length; i++) {
 					out[i] = ary1[o];
 					o++;
 				}
 				return out;
 			}
+			//checks the next/lowest elements of both array and determines which is the lowest thus being put into the output array.
 			if(ary1[o][0] >= ary2[t][0]) {
 				out[n] = ary2[t];
 				t++;
