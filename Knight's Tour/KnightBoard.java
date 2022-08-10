@@ -79,11 +79,18 @@ public class KnightBoard{
 	 */
 	private boolean solveHelper(int r, int c, int pos) {
 		if(pos == board.length * board[0].length) {
+			//a solution is found as the number of knights equal the total numbers of spots on the board.
 			board[r][c] = pos;
 			return true;
 		}
 		int[][] moves = getMoves(r,c);
 		board[r][c] = pos;
+		board[r][c] = 0;
+		for (int i = 0; i < move.length; i++) {
+			if (move[i][0] + r < board.length && move[i][0] >= 0 && move[i][1] + c < board[0].length && move[i][1] + c >= 0 && board2[move[i][0] + r][move[i][1] + c] > 0){
+				board2[move[i][0] + r][move[i][1] + c]--;
+			}
+		}
 		for(int i = 0; i < moves.length; i++) {
 			//attempt every possible move from board[r][c] and see if a solution can be found.
 			if(solveHelper(moves[i][1],moves[i][2],pos+1)) {
@@ -92,22 +99,36 @@ public class KnightBoard{
 		}
 		//backtracks if a solution isn't found.
 		board[r][c] = 0;
+		for (int i = 0; i < move.length; i++) {
+			if (move[i][0] + r < board.length && move[i][0] >= 0 && move[i][1] + c < board[0].length && move[i][1] + c >= 0){
+				board2[move[i][0] + r][move[i][1] + c]++;
+			}
+		}
 		//clears the board.
 		board = new int[board.length][board[0].length];
 		return false;
 	}
 
+	/**
+	 * Counts how many different tours can be made by the knight starting at a specific row and column.
+	 * @param startRow the row that the knight will start the tour on.
+	 * @param startCol the column that the knight will start the tour on.
+	 * @return the number of solutions or unique tours found as an integer.
+	 */
 	public int countSolutions(int startRow, int startCol) {
 		if(startRow < 0 || startCol < 0) {
+			//starting row and col should be a valid index.
 			throw new IllegalArgumentException();
 		}
 		for(int r = 0; r < board2.length; r++) {
 			for(int c = 0; c < board2[r].length; c++) {
 				if(board[r][c] != 0) {
+					//the board should be completely empty.
 					throw new IllegalStateException();
 				}
 			}
 		}
+		//there is no solution if there is no board.
 		if(board.length == 0) {
 			return 0;
 		}
@@ -116,8 +137,15 @@ public class KnightBoard{
 		return count;
 	}
 
+	/**
+	 * A helper function for countSolution that attempts a tour and increases count if it is a solution.
+	 * @param r the row that the next knight will be placed on.
+	 * @param c the column that the next knight will be placed on.
+	 * @param pos the number of the knight that is being place.
+	 */
 	private void countSolutionHelper(int r, int c, int pos) {
 		if(pos == board.length * board[0].length) {
+			//a solution is found as the number of knights equal the total numbers of spots on the board.
 			count++;
 		}
 		int[][] moves = getMoves(r,c);
