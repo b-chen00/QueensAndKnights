@@ -249,7 +249,7 @@ public class QueenBoard{
 	* @param row the starting row from which the queen will be placed.
 	* @return an integer representing the number of solutions.
 	*/
-	public int countSolutionsHelper(int row) {
+	private int countSolutionsHelper(int row) {
 		int count = 0;
 		if (row >= board.length) {
 						return 1;
