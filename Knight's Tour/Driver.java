@@ -15,9 +15,9 @@ public class Driver{
         b = new KnightBoard(m[i%m.length],n[i%m.length]);
 
         int ans  = b.countSolutions(startx[i],starty[i]);
-        System.out.println("Testing board of size " + String.valueOf(m[i]) + " by " + String.valueOf(n[i]) + " with starting location (" + String.valueOf(startx[i]) + "," + String.valueOf(starty[i]) + ")");
-        System.out.println("Expected answer: " + String.valueOf(ans));
-        System.out.println("Got answer: " + String.valueOf(answers[i]));
+        System.out.println("Testing board of size " + m[i] + " by " + n[i] + " with starting location (" + startx[i] + "," + starty[i] + ")");
+        System.out.println("Expected answer: " + ans);
+        System.out.println("Got answer: " + answers[i]);
         if(correct == ans){
           System.out.println("PASS board size: " + m[i%m.length] + "x" + n[i%m.length] + " " + ans + "\n");
         }
@@ -138,12 +138,12 @@ public class Driver{
       KnightBoard b = new KnightBoard(r, c);
       boolean solvable = b.solve(startR, startC, true);
       if (!solvable){
-        System.out.println("Board of size " + String.valueOf(r) + " by " + String.valueOf(c)+ " with starting location (" + String.valueOf(startR) + ", " + String.valueOf(startC) + ") is not solvable.");
+        System.out.println("Board of size " + r + " by " + c + " with starting location (" + startR + ", " + startC + ") is not solvable.");
       }
       else{
         long startTime = System.nanoTime();
         int numOfSolutions = b.countSolutions(startR, startC);
-        System.out.println("There are " + String.valueOf(numOfSolutions) + " solutions found in " + Math.round((System.nanoTime()-startTime)/10000.)/100.+"ms\n.");
+        System.out.println("There are " + numOfSolutions + " solutions found in " + Math.round((System.nanoTime()-startTime)/10000.)/100.+"ms.\n");
       }
       System.out.println("Enter 'exit' to exit the program otherwise enter any key to continue.");
       if (s.nextLine().toLowerCase().equals("exit")){
