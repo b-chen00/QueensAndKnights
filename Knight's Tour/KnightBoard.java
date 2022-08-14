@@ -15,9 +15,9 @@ public class KnightBoard{
 	private int count;
 
 	/**
-	* initalizes knightboard and fills in initial state of board2
-	* @param rows how many rows the board has
-	* @param cols how many columns the board has
+	* initalizes knightboard and fills in initial state of board2.
+	* @param rows how many rows the board has.
+	* @param cols how many columns the board has.
 	*/
 	public KnightBoard(int rows,int cols) {
 		count = 0;
@@ -49,11 +49,12 @@ public class KnightBoard{
 	* Solves the knight's tour starting at position startRow and startCol.
 	* @param startRow the row from which the knight will start the tour.
 	* @param startCol the column from which the knight will start the tour.
+  * @param display if true then the found solution will be printed.
 	* @exception IllegalArgumentException if starting row and column are not within the board.
 	* @exception IllegalStateException if the board is not empty.
 	* @return a boolean indicating whether it is solvable or not.
 	*/
-	public boolean solve(int startRow, int startCol) {
+	public boolean solve(int startRow, int startCol, boolean display) {
 		//starting row and col should be a valid index.
 		if(startRow < 0 || startCol < 0 || startRow >= board.length || startCol >= board[0].length) {
 			throw new IllegalArgumentException();
@@ -69,7 +70,7 @@ public class KnightBoard{
 		if(board.length == 0) {
 			return false;
 		}
-		return solveHelper(startRow,startCol,1);
+		return solveHelper(startRow, startCol, 1, display);
 	}
 
 	/**
@@ -77,12 +78,18 @@ public class KnightBoard{
 	* @param r the row that the next knight will be placed on.
 	* @param c the column that the next knight will be placed on.
 	* @param pos the number of the knight that is being place.
+	* @param display if true then the found solution will be printed.
 	* @return a boolean on whether a solution is found or not.
 	*/
-	private boolean solveHelper(int r, int c, int pos) {
+	private boolean solveHelper(int r, int c, int pos, boolean display) {
 		if(pos == board.length * board[0].length) {
 			//a solution is found as the number of knights equal the total numbers of spots on the board.
 			board[r][c] = pos;
+			if (display){
+				System.out.println(this.toString());
+			}
+			//clears the board.
+			board = new int[board.length][board[0].length];
 			return true;
 		}
 		// gets all legal moves that can be made by the knight at position (r,c).
@@ -97,7 +104,7 @@ public class KnightBoard{
 		}
 		for(int i = 0; i < moves.length; i++) {
 			//attempt every possible move from board[r][c] and see if a solution can be found.
-			if(solveHelper(moves[i][1],moves[i][2],pos+1)) {
+			if(solveHelper(moves[i][1],moves[i][2],pos+1,display)) {
 				return true;
 			}
 		}
@@ -108,7 +115,6 @@ public class KnightBoard{
 				board2[move[i][0] + r][move[i][1] + c]++;
 			}
 		}
-		//clears the board.
 		board = new int[board.length][board[0].length];
 		return false;
 	}
