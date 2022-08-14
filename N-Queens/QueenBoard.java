@@ -138,10 +138,11 @@ public class QueenBoard{
 
 	/**
 	* Solves the N-Queen problem and throws an exception if the board isn't clear.
+	* @param display a boolean determining whether the board solution should be printed.
 	* @exception IllegalStateException if the board is not empty.
 	* @returns true if a solution was found and false otherwise.
 	*/
-	public boolean solve(){
+	public boolean solve(boolean display){
 		if (board.length == 0){
 			return false;
 		}
@@ -152,7 +153,7 @@ public class QueenBoard{
 				}
 			}
 		}
-		return solveHelper(0);
+		return solveHelper(0, display);
 	}
 
 	/**
@@ -160,14 +161,19 @@ public class QueenBoard{
 	* @param row the row that queens will start to be placed on. There should only be one queen per row due to how they attack.
 	* @return true if a solution was found and false otherwise.
 	*/
-	private boolean solveHelper(int row){ //goes row by row and col by col and check if its avaliable
+	private boolean solveHelper(int row, boolean display){ //goes row by row and col by col and check if its avaliable
 		if (check()){
+			if (display){
+				System.out.println(this.toString());
+			}
+			//clears the board.
+			board = new int[board.length][board[0].length];
 			return true;
 		}
 		for (int c = 0; c < board[row].length; c++){
 			if (board[row][c] == 0){
 				addQueen(row,c);
-				if (solveHelper(row+1)){
+				if (solveHelper(row+1, display)){
 					return true;
 				}
 				removeQueen(row,c);
@@ -209,7 +215,7 @@ public class QueenBoard{
 				if (board[r][c] == -1){
 					if (!found){
 						//first queen in this column is found.
-						found = true
+						found = true;
 					}
 					else{
 						//there should only be one queen per column.
@@ -252,7 +258,7 @@ public class QueenBoard{
 	private int countSolutionsHelper(int row) {
 		int count = 0;
 		if (row >= board.length) {
-						return 1;
+			return 1;
 		}
 		for (int i = 0; i < board.length; i++) {
 			if (addQueen(row, i)) {
